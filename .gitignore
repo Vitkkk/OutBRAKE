@@ -1,0 +1,6 @@
+*.mp4
+*.webm
+preview.png
+profile.png
+node_modules/
+__pycache__/
