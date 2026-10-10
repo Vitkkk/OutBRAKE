@@ -1,4 +1,4 @@
-# OutBRAKE · v0.2
+# OutBRAKE · v0.3
 
 Uma animação de um surto fictício de tempestades e tornados condicionada por um ambiente meteorológico real. Projeto de Vitkkk.
 
@@ -6,9 +6,8 @@ Uma animação de um surto fictício de tempestades e tornados condicionada por 
 
 ## Versão atual
 
-- Consulta inicial real do GFS, obtida em **10/10/2026 às 14:47 UTC**, para **Santa Catarina, 27°S / 51°W**, com validade **10/10/2026 às 17:00 UTC**.
-- CAPE do modelo: 1.550 J/kg; shear 0–6 km: 18,4 m/s; SRH ciclônica 0–1 km: 94 m²/s²; LCL aproximado: 300 m AGL.
-- A semente inicial 1041026 produz 6 células e 4 tornados **fictícios**, com pico fictício de 217 km/h.
+- Ambiente principal: **Geórgia / Macon**, 32,84°N / 83,63°W, GFS válido em **10/10/2026 às 19:00 UTC (15h EDT)**. CAPE: 2.070 J/kg; shear 0–6 km: 22,8 m/s; SRH 0–1 km: 62 m²/s². A semente inicial produz 7 células e 4 tornados fictícios, pico 208 km/h.
+- Segundo cenário incluído: **Alabama / Dothan**, 31,22°N / 85,39°W, GFS válido em **10/10/2026 às 06:00 UTC (1h CDT)**. CAPE: 520 J/kg; shear: 32,2 m/s; SRH: 263 m²/s². Produz 4 células e 3 tornados fictícios, pico 228 km/h.
 - Animação regional de quatro horas, controles de reprodução, novos cenários reproduzíveis, mapa de comparação global, perfil termodinâmico e hodógrafa.
 - Consulta de novas previsões GFS e ECMWF por Open-Meteo, com mensagens de falha e preservação explícita do ambiente anterior.
 - Gravação do canvas em vídeo de 36 segundos (30 de evolução + 6 de resumo) (WebM ou MP4, conforme o navegador), mantendo uma identificação de simulação no próprio vídeo.
@@ -32,7 +31,7 @@ O perfil vertical utiliza temperatura, umidade, altura geopotencial e ventos em 
 
 O ambiente fica fixo nas quatro horas fictícias de evolução. O número de células, iniciação, duração, tornadogênese, ventos e largura dos tornados vêm de **regras heurísticas de entretenimento**, com semente reproduzível. Não se integram equações atmosféricas. Os ecos são campos sintéticos rasterizados: núcleo e escudo de precipitação, entalhe de entrada, apêndice contínuo e textura espacial reproduzível. A paleta de dBZ é ilustrativa, sem cálculo físico de refletividade. A classe EF exibida é simulada, calculada pela faixa do pico fictício convertido em mph e arredondado (limites superiores 85, 110, 135, 165 e 200 mph). A cauda de ventos abaixo de 65 mph fica no grupo EF0 do simulador. As cores das trilhas e todos os rótulos usam a mesma classificação. Não há simulação de danos estruturais.
 
-Nesta versão ainda não há radiossondagens observadas, campo de relevo/DEM, frentes ou convergência. Os contornos Natural Earth são geográficos e simplificados; não são orografia. Horário de validade e de obtenção não equivalem à inicialização de uma rodada. A fotografia inicial fica identificada como antiga depois de 12 horas.
+Nesta versão ainda não há radiossondagens observadas, campo de relevo/DEM que influencie o motor, frentes ou convergência. Os contornos Natural Earth são geográficos e simplificados; não são orografia. Horário de validade e de obtenção não equivalem à inicialização de uma rodada. A fotografia inicial fica identificada como antiga depois de 12 horas.
 
 ## Arquivos
 
@@ -65,3 +64,13 @@ O botão de gravação requer um navegador com Canvas captureStream e MediaRecor
 - Cena final de seis segundos com todos os rótulos e picos; tabela do resumo no site.
 - A semente inicial continua com 6 células e 4 tornados: T01 EF1 (148 km/h), T02 EF2 (202 km/h), T03 EF1 (153 km/h), T04 EF2 (217 km/h).
 - Faixas de referência: https://www.weather.gov/oun/efscale
+
+## Mudanças na v0.3
+
+- Fundo de satélite da superfície usando Esri World Imagery, alinhado por um retângulo geográfico EPSG:4326 retornado pelo serviço.
+- Satélite ligado por padrão no mapa regional; contornos permanecem como alternativa.
+- Cópia incluída de um mosaico do sudeste dos EUA. O mosaico usa imagens com datas de aquisição variáveis; não é satélite meteorológico ao vivo.
+- Créditos visíveis no mapa e no vídeo: Esri, Vantor, Earthstar Geographics e GIS User Community.
+- O site consulta um novo mosaico para outras regiões, quando necessário; falhas de rede mantêm a alternativa geográfica.
+- Dois ambientes reais de 10/10/2026 selecionáveis, com seus horários explícitos: tarde na Geórgia e madrugada no Alabama. A imagem de superfície não altera a física do motor.
+- Fonte das imagens: https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer
