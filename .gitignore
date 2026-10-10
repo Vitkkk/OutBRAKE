@@ -2,5 +2,6 @@
 *.webm
 preview.png
 profile.png
+summary.png
 node_modules/
 __pycache__/

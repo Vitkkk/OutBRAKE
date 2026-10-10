@@ -1,17 +1,17 @@
-# OutBRAKE · v0.1
+# OutBRAKE · v0.2
 
 Uma animação de um surto fictício de tempestades e tornados condicionada por um ambiente meteorológico real. Projeto de Vitkkk.
 
 **Abrir a versão interativa:** https://outbrake-vito-v1.vitoskkkkk.chatgpt.site (acesso privado do criador).
 
-## Primeira versão
+## Versão atual
 
 - Consulta inicial real do GFS, obtida em **10/10/2026 às 14:47 UTC**, para **Santa Catarina, 27°S / 51°W**, com validade **10/10/2026 às 17:00 UTC**.
 - CAPE do modelo: 1.550 J/kg; shear 0–6 km: 18,4 m/s; SRH ciclônica 0–1 km: 94 m²/s²; LCL aproximado: 300 m AGL.
 - A semente inicial 1041026 produz 6 células e 4 tornados **fictícios**, com pico fictício de 217 km/h.
 - Animação regional de quatro horas, controles de reprodução, novos cenários reproduzíveis, mapa de comparação global, perfil termodinâmico e hodógrafa.
 - Consulta de novas previsões GFS e ECMWF por Open-Meteo, com mensagens de falha e preservação explícita do ambiente anterior.
-- Gravação do canvas em vídeo de 30 segundos (WebM ou MP4, conforme o navegador), mantendo uma identificação de simulação no próprio vídeo.
+- Gravação do canvas em vídeo de 36 segundos (30 de evolução + 6 de resumo) (WebM ou MP4, conforme o navegador), mantendo uma identificação de simulação no próprio vídeo.
 - Câmera de campo ilustrativa, vinculada ao tornado ativo. Mapa e interface adaptados ao celular.
 
 ## Rodar localmente
@@ -30,7 +30,7 @@ A comparação é uma amostra de **36 pontos**, escolhidos em regiões convectiv
 
 O perfil vertical utiliza temperatura, umidade, altura geopotencial e ventos em níveis de pressão do modelo. Os níveis abaixo do solo são descartados. As alturas são convertidas para AGL usando a elevação retornada pela API. O vento é interpolado por altura; o vento de 10 m representa a origem do perfil. O movimento usa a aproximação de Bunkers: vento médio 0–6 km, diferença entre as médias 0–0,5 e 5,5–6 km, desvio de 7,5 m/s e seleção do ramo ciclônico conforme o hemisfério. SRH é integrada em passos de 100 m e apresentada com sinal ciclônico local. LCL é aproximado por 125 × (T − Td). CAPE é o campo fornecido pelo serviço, sem renomeá-lo como MLCAPE.
 
-O ambiente fica fixo nas quatro horas fictícias de evolução. O número de células, iniciação, duração, tornadogênese, ventos e largura dos tornados vêm de **regras heurísticas de entretenimento**, com semente reproduzível. Não se integram equações atmosféricas. Os ecos são ilustrações sintéticas, sem escala física de dBZ. Nenhuma categoria EF é atribuída a partir de CAPE ou aparência. Não há simulação de danos estruturais.
+O ambiente fica fixo nas quatro horas fictícias de evolução. O número de células, iniciação, duração, tornadogênese, ventos e largura dos tornados vêm de **regras heurísticas de entretenimento**, com semente reproduzível. Não se integram equações atmosféricas. Os ecos são campos sintéticos rasterizados: núcleo e escudo de precipitação, entalhe de entrada, apêndice contínuo e textura espacial reproduzível. A paleta de dBZ é ilustrativa, sem cálculo físico de refletividade. A classe EF exibida é simulada, calculada pela faixa do pico fictício convertido em mph e arredondado (limites superiores 85, 110, 135, 165 e 200 mph). A cauda de ventos abaixo de 65 mph fica no grupo EF0 do simulador. As cores das trilhas e todos os rótulos usam a mesma classificação. Não há simulação de danos estruturais.
 
 Nesta versão ainda não há radiossondagens observadas, campo de relevo/DEM, frentes ou convergência. Os contornos Natural Earth são geográficos e simplificados; não são orografia. Horário de validade e de obtenção não equivalem à inicialização de uma rodada. A fotografia inicial fica identificada como antiga depois de 12 horas.
 
@@ -56,3 +56,12 @@ OUTBRAKE_CANVAS_MODULE=@napi-rs/canvas node scripts/render-clip.cjs --video OutB
 - Dados meteorológicos distribuídos pelo Open-Meteo sob as condições e atribuições do serviço. Uso desta integração gratuita sujeito aos limites de uso do serviço.
 
 O botão de gravação requer um navegador com Canvas captureStream e MediaRecorder. O acesso às APIs externas pode falhar por rede, CORS ou limites do serviço; a interface informa a falha e conserva a consulta anterior.
+
+## Mudanças na v0.2
+
+- Ecos em pixels com formas irregulares e ganchos contínuos, substituindo círculos visíveis.
+- Tornado posicionado no extremo do gancho; trilhas e câmera mantêm a mesma identificação.
+- Legenda EF0–EF5 das trilhas; identificação e classe ao lado de cada tornado.
+- Cena final de seis segundos com todos os rótulos e picos; tabela do resumo no site.
+- A semente inicial continua com 6 células e 4 tornados: T01 EF1 (148 km/h), T02 EF2 (202 km/h), T03 EF1 (153 km/h), T04 EF2 (217 km/h).
+- Faixas de referência: https://www.weather.gov/oun/efscale
