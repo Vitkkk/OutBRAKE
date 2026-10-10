@@ -1,4 +1,4 @@
-# OutBRAKE · v0.3
+# OutBRAKE · v0.4
 
 Uma animação de um surto fictício de tempestades e tornados condicionada por um ambiente meteorológico real. Projeto de Vitkkk.
 
@@ -74,3 +74,19 @@ O botão de gravação requer um navegador com Canvas captureStream e MediaRecor
 - O site consulta um novo mosaico para outras regiões, quando necessário; falhas de rede mantêm a alternativa geográfica.
 - Dois ambientes reais de 10/10/2026 selecionáveis, com seus horários explícitos: tarde na Geórgia e madrugada no Alabama. A imagem de superfície não altera a física do motor.
 - Fonte das imagens: https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer
+
+## Mudanças na v0.4
+
+- Botão **Baixar KML** exporta todas as trajetórias geradas, independente do instante do player; **Gravar clipe** também baixa o KML do mesmo cenário. Se o navegador bloquear downloads múltiplos, o botão KML permite baixá-lo separadamente.
+- Uma pasta por classe no Google Earth: EF0 azul claro (`#91cfff`), EF1 azul escuro (`#2459c4`), EF2 amarelo (`#ffd400`), EF3 laranja (`#ff8c24`), EF4 vermelho (`#f02c38`), EF5 rosa (`#ff71be`). Vídeo, mapa, resumo e KML compartilham a paleta.
+- Cada tornado aparece com ID e classe no fim da linha. Seus dados incluem pico fictício, início/fim simulados em UTC, duração, comprimento aproximado, parâmetro de largura, célula e semente. Horários simulados = validade do ambiente + minutos do cenário.
+- As coordenadas são a inversa do plano geográfico do mapa (111 km por grau de latitude; longitude corrigida pelo cosseno da latitude do ambiente); caminhos amostrados por minuto com início/fim exatos e presos à superfície. São as mesmas trajetórias do vídeo, sem precisão geodésica nem corredor de danos.
+- Referência do formato: https://developers.google.com/kml/documentation/kmlreference
+
+Para renderizar um clipe e o KML do mesmo cenário:
+
+```bash
+OUTBRAKE_CANVAS_MODULE=@napi-rs/canvas node scripts/render-clip.cjs --snapshot bootstrap-alabama.json --video Alabama.mp4 --kml Alabama.kml
+```
+
+O argumento `--kml` também funciona sem `--video`.

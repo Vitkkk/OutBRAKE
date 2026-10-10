@@ -5,3 +5,5 @@
 .stage-toolbar{flex-wrap:wrap}.layer-buttons{flex-wrap:wrap}@media(max-width:760px){.stage-toolbar .tabs{flex-basis:100%}.layer-buttons{gap:5px}.layer-buttons button{font-size:9px;padding:7px 10px}}
 
 .preset{width:100%;margin-bottom:9px;color:#ace58b}
+
+.scenario-strip{flex-wrap:wrap}.scenario-strip>div{min-width:200px}@media(max-width:400px){.scenario-strip button{flex-basis:40%}.scenario-strip #exportBtn{flex-basis:100%}}

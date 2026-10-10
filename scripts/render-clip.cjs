@@ -19,8 +19,13 @@ assert(app.state.env.profile.every(x=>x.z>=0));assert(Number.isFinite(app.state.
 const baseline=JSON.stringify(app.state.tornadoes);app.generate();assert.equal(JSON.stringify(app.state.tornadoes),baseline,'Seed must reproduce the same tornadoes');
 const p=app.state.env.profile,mNorth=app.stormMotion(p,30),mSouth=app.stormMotion(p,-30);assert(Math.hypot(mNorth.u-mSouth.u,mNorth.v-mSouth.v)>14.9,'Hemispheric storm-motion branches must differ');
 for(const tor of app.state.tornadoes){assert(tor.end>tor.start);const cell=app.state.cells.find(c=>c.id===tor.cell);assert(tor.start>=cell.start&&tor.end<=cell.end);assert(Number.isFinite(app.torPosition(tor,tor.start).x));}
-const cape=app.state.env.cape;app.state.env.cape=0;app.generate();assert.equal(app.state.tornadoes.length,0);app.state.env.cape=cape;app.generate();
+const cape=app.state.env.cape;app.state.env.cape=0;app.generate();assert.equal(app.state.tornadoes.length,0);assert(!app.buildKML().includes('<Placemark '),'Empty scenarios must export an empty KML without invented tracks');app.state.env.cape=cape;app.generate();
 assert.equal(app.efRating(217),2);assert.equal(app.efRating(300),4);assert.equal(app.efRating(350),5);
+const fullKML=app.buildKML();app.state.time=240;assert.equal(app.buildKML(),fullKML,'KML must include complete tracks at any playhead');app.state.time=0;
+assert.equal((fullKML.match(/<Placemark /g)||[]).length,app.state.tornadoes.length);
+assert.deepEqual(Array.from(app.EF_COLORS,app.kmlColor),['ffffcf91','ffc45924','ff00d4ff','ff248cff','ff382cf0','ffbe71ff']);
+for(const tor of app.state.tornadoes){const points=app.trackCoordinates(tor);assert.equal(points[0].time,tor.start);assert.equal(points.at(-1).time,tor.end);assert(points.length>=2);for(const p of points){assert(Number.isFinite(p.lon)&&Number.isFinite(p.lat)&&Math.abs(p.lon)<=180&&Math.abs(p.lat)<=90);assert(Math.abs((p.lon-boot.region.lon)*111*Math.cos(boot.region.lat*Math.PI/180)-p.x)<1e-8);assert(Math.abs((p.lat-boot.region.lat)*111-p.y)<1e-8);}}
+if(process.argv.includes('--kml')){const output=process.argv[process.argv.indexOf('--kml')+1];if(!output||output.startsWith('--'))throw Error('--kml requires an output filename');fs.writeFileSync(output,fullKML);console.log('KML written: '+output);}
 app.render(main.getContext('2d'),1280,720,240);fs.writeFileSync(path.join(__dirname,'summary.png'),main.toBuffer('image/png'));
 app.render(main.getContext('2d'),1280,720,105);fs.writeFileSync(path.join(__dirname,'preview.png'),main.toBuffer('image/png'));fs.writeFileSync(path.join(__dirname,'profile.png'),sounding.toBuffer('image/png'));
 console.log(JSON.stringify({verification:'passed',region:boot.region.name,environment:{cape:app.state.env.cape,shear:app.state.env.shear,srh:app.state.env.srh,lcl:app.state.env.lcl,motion:app.state.env.motion,favor:app.state.env.favor},cells:app.state.cells.length,tornadoes:app.state.tornadoes.length,peak:Math.max(0,...app.state.tornadoes.map(t=>t.peak))}));
