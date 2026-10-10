@@ -1,0 +1,9 @@
+const assert=require('assert'),fs=require('fs'),vm=require('vm'),path=require('path');
+const project=path.resolve(__dirname,'..'),root=fs.existsSync(path.join(project,'dist'))?path.join(project,'dist'):project,context={window:{}};
+vm.createContext(context);vm.runInContext(fs.readFileSync(path.join(root,'learning.js'),'utf8'),context);
+const model=JSON.parse(fs.readFileSync(path.join(root,'training-model.json'))),geometry=JSON.parse(fs.readFileSync(path.join(root,'track-shapes.json'))),rows=fs.readFileSync(path.join(__dirname,'dataset.csv'),'utf8').trim().split(/\r?\n/),headers=rows.shift().split(','),data=rows.map(l=>Object.fromEntries(l.split(',').map((v,i)=>[headers[i],['point','time','report_ids','split'].includes(headers[i])?v:Number(v)])));
+const trainDates=new Set(data.filter(r=>r.split==='train').map(r=>r.time.slice(0,10))),testDates=new Set(data.filter(r=>r.split==='test').map(r=>r.time.slice(0,10)));assert([...trainDates].every(d=>!testDates.has(d)));
+let maxError=0;for(const r of data){const p=context.window.OutBRAKELearning.predict(model,r);assert(p>=0&&p<=1);maxError=Math.max(maxError,Math.abs(p-r.probability));}assert(maxError<1e-5,'JS inference must match fitted Python pipeline');
+for(const t of geometry.templates){assert(t.vertices>=3&&t.shape.length===33);assert(t.shape.flat().every(Number.isFinite));assert(Math.abs(t.shape[0][0])+Math.abs(t.shape[0][1])<1e-5);assert(Math.abs(t.shape.at(-1)[0]-1)+Math.abs(t.shape.at(-1)[1])<1e-5);for(let i=0;i<=100;i++)assert(context.window.OutBRAKELearning.shapeAt(t,i/100).every(Number.isFinite));}
+assert(geometry.templates.some(t=>t.max_lateral_fraction>.05),'Library must retain documented curved paths');
+console.log(JSON.stringify({verification:'passed',rows:data.length,trainDays:trainDates.size,testDays:testDates.size,maxInferenceError:maxError,geometryTemplates:geometry.templates.length}));

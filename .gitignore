@@ -5,3 +5,6 @@ profile.png
 summary.png
 node_modules/
 __pycache__/
+/render-clip.cjs
+training/cache/
+training/*.pkl

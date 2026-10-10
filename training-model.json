@@ -1,0 +1,268 @@
+{
+  "version": 1,
+  "kind": "retrospective-environmental-classifier",
+  "model": "GFS global historical seamless",
+  "target": "At least one NCEI tornado county/event start within 150 km during the next 6 h",
+  "training_period": "2024-04-01 / 2024-05-31",
+  "test_period": "2025-04-01 / 2025-05-31",
+  "forecast_lead_hours": null,
+  "features": [
+    "log_cape",
+    "shear",
+    "srh",
+    "lcl_km",
+    "dewpoint",
+    "log_cin",
+    "cape_shear",
+    "cape_srh"
+  ],
+  "means": [
+    2.7857312692255576,
+    19.63979085590271,
+    42.92790836236843,
+    0.7881948002049197,
+    11.097566598360663,
+    1.7473693905371575,
+    2.029650835754121,
+    1.0073155401854486
+  ],
+  "scales": [
+    3.0013029143454837,
+    8.378686949241446,
+    76.32347876885106,
+    0.7202732138489011,
+    7.352065389568507,
+    2.1712838045525036,
+    2.493122313382489,
+    2.138791224899256
+  ],
+  "coefficients": [
+    0.7868137841240074,
+    0.20029246865343775,
+    0.6778755272487845,
+    0.2605059787692253,
+    0.6663241129221128,
+    -0.5735023670322191,
+    -0.006036066916649713,
+    0.18153962794099884
+  ],
+  "intercept": -4.7752484018748,
+  "training_rows": 3904,
+  "test_rows": 3904,
+  "training_positive": 87,
+  "test_positive": 73,
+  "training_days": 61,
+  "test_days": 61,
+  "grid_points": 16,
+  "scores": {
+    "learned": {
+      "brier": 0.016286639805655055,
+      "average_precision": 0.23488417744696155,
+      "roc_auc": 0.9021036032653587,
+      "log_loss": 0.06793992689917991,
+      "threshold": 0.1,
+      "hits": 30,
+      "false_alarms": 143,
+      "misses": 43,
+      "precision_at_threshold": 0.17341040462427745,
+      "recall_at_threshold": 0.410958904109589,
+      "brier_skill_vs_climatology": 0.11302407572317907
+    },
+    "heuristic": {
+      "brier": 0.01652015193746104,
+      "average_precision": 0.23920985636698383,
+      "roc_auc": 0.8908990463522167,
+      "log_loss": 0.07465024799132548,
+      "threshold": 0.1,
+      "hits": 23,
+      "false_alarms": 76,
+      "misses": 50,
+      "precision_at_threshold": 0.23232323232323232,
+      "recall_at_threshold": 0.3150684931506849,
+      "brier_skill_vs_climatology": 0.10030692587459289
+    },
+    "climatology": {
+      "brier": 0.01836198634019752,
+      "average_precision": 0.01869877049180328,
+      "roc_auc": 0.5,
+      "log_loss": 0.09324277880123114,
+      "threshold": 0.1,
+      "hits": 0,
+      "false_alarms": 0,
+      "misses": 73,
+      "precision_at_threshold": null,
+      "recall_at_threshold": 0.0
+    }
+  },
+  "paired_day_bootstrap_brier_gain_95pct": [
+    -0.0007574476372785879,
+    0.0012596303366184604
+  ],
+  "calibration": [
+    {
+      "n": 488,
+      "predicted": 0.0011825033876033952,
+      "observed": 0.0
+    },
+    {
+      "n": 488,
+      "predicted": 0.0023135927138153785,
+      "observed": 0.0
+    },
+    {
+      "n": 488,
+      "predicted": 0.003426784358530225,
+      "observed": 0.0020491803278688526
+    },
+    {
+      "n": 488,
+      "predicted": 0.0048109910540483185,
+      "observed": 0.0020491803278688526
+    },
+    {
+      "n": 488,
+      "predicted": 0.007015426693830282,
+      "observed": 0.0020491803278688526
+    },
+    {
+      "n": 488,
+      "predicted": 0.012062498675519095,
+      "observed": 0.006147540983606557
+    },
+    {
+      "n": 488,
+      "predicted": 0.02532884279585816,
+      "observed": 0.03278688524590164
+    },
+    {
+      "n": 488,
+      "predicted": 0.11986535970800036,
+      "observed": 0.10450819672131148
+    }
+  ],
+  "rejected_report_records": 2,
+  "limitations": [
+    "Archive stitches model runs: this is not a fixed-lead operational forecast test.",
+    "16 fixed points, April\u2013May only, central/eastern USA.",
+    "No-report labels include possible unreported events. NCEI rows are county/event records, not unique tornado counts.",
+    "Positive target uses report-segment starts, not complete damage corridors.",
+    "No radar or observed radiosondes in this first training.",
+    "Probabilities describe a 150 km / 6 h report target, not individual-cell tornadogenesis."
+  ],
+  "sources": {
+    "grid": [
+      {
+        "id": "31_-100",
+        "lat": 31,
+        "lon": -100
+      },
+      {
+        "id": "31_-95",
+        "lat": 31,
+        "lon": -95
+      },
+      {
+        "id": "31_-90",
+        "lat": 31,
+        "lon": -90
+      },
+      {
+        "id": "31_-85",
+        "lat": 31,
+        "lon": -85
+      },
+      {
+        "id": "35_-100",
+        "lat": 35,
+        "lon": -100
+      },
+      {
+        "id": "35_-95",
+        "lat": 35,
+        "lon": -95
+      },
+      {
+        "id": "35_-90",
+        "lat": 35,
+        "lon": -90
+      },
+      {
+        "id": "35_-85",
+        "lat": 35,
+        "lon": -85
+      },
+      {
+        "id": "39_-100",
+        "lat": 39,
+        "lon": -100
+      },
+      {
+        "id": "39_-95",
+        "lat": 39,
+        "lon": -95
+      },
+      {
+        "id": "39_-90",
+        "lat": 39,
+        "lon": -90
+      },
+      {
+        "id": "39_-85",
+        "lat": 39,
+        "lon": -85
+      },
+      {
+        "id": "43_-100",
+        "lat": 43,
+        "lon": -100
+      },
+      {
+        "id": "43_-95",
+        "lat": 43,
+        "lon": -95
+      },
+      {
+        "id": "43_-90",
+        "lat": 43,
+        "lon": -90
+      },
+      {
+        "id": "43_-85",
+        "lat": 43,
+        "lon": -85
+      }
+    ],
+    "period": "April\u2013May 2024 train; April\u2013May 2025 held-out test",
+    "sources": [
+      {
+        "kind": "NCEI Storm Events county/event records",
+        "year": 2024,
+        "url": "https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/StormEvents_details-ftp_v1.0_d2024_c20260728.csv.gz",
+        "sha256": "2070b83eccab041b36360ab73645b9a249c3eefc5b92b5b3fc0cbba4d9fcc09c"
+      },
+      {
+        "kind": "NCEI Storm Events county/event records",
+        "year": 2025,
+        "url": "https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/StormEvents_details-ftp_v1.0_d2025_c20260819.csv.gz",
+        "sha256": "d9b46b4c6aae554723cadbb9691f3d5258371c02e530ba815d6fe41e4550149f"
+      },
+      {
+        "kind": "GFS historical seamless (not fixed forecast lead)",
+        "year": 2024,
+        "url": "https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=31%2C31%2C31%2C31%2C35%2C35%2C35%2C35%2C39%2C39%2C39%2C39%2C43%2C43%2C43%2C43&longitude=-100%2C-95%2C-90%2C-85%2C-100%2C-95%2C-90%2C-85%2C-100%2C-95%2C-90%2C-85%2C-100%2C-95%2C-90%2C-85&start_date=2024-04-01&end_date=2024-05-31&hourly=cape%2Cconvective_inhibition%2Ctemperature_2m%2Cdew_point_2m%2Csurface_pressure%2Cwind_speed_10m%2Cwind_direction_10m%2Ctemperature_1000hPa%2Crelative_humidity_1000hPa%2Cgeopotential_height_1000hPa%2Cwind_speed_1000hPa%2Cwind_direction_1000hPa%2Ctemperature_925hPa%2Crelative_humidity_925hPa%2Cgeopotential_height_925hPa%2Cwind_speed_925hPa%2Cwind_direction_925hPa%2Ctemperature_850hPa%2Crelative_humidity_850hPa%2Cgeopotential_height_850hPa%2Cwind_speed_850hPa%2Cwind_direction_850hPa%2Ctemperature_700hPa%2Crelative_humidity_700hPa%2Cgeopotential_height_700hPa%2Cwind_speed_700hPa%2Cwind_direction_700hPa%2Ctemperature_600hPa%2Crelative_humidity_600hPa%2Cgeopotential_height_600hPa%2Cwind_speed_600hPa%2Cwind_direction_600hPa%2Ctemperature_500hPa%2Crelative_humidity_500hPa%2Cgeopotential_height_500hPa%2Cwind_speed_500hPa%2Cwind_direction_500hPa%2Ctemperature_400hPa%2Crelative_humidity_400hPa%2Cgeopotential_height_400hPa%2Cwind_speed_400hPa%2Cwind_direction_400hPa&models=gfs_global&wind_speed_unit=ms&timezone=GMT",
+        "sha256": "415cf24bf685ff7d9d845885b79848a7b122b68d7927c8a1eb2f8bdbfa14993a"
+      },
+      {
+        "kind": "GFS historical seamless (not fixed forecast lead)",
+        "year": 2025,
+        "url": "https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=31%2C31%2C31%2C31%2C35%2C35%2C35%2C35%2C39%2C39%2C39%2C39%2C43%2C43%2C43%2C43&longitude=-100%2C-95%2C-90%2C-85%2C-100%2C-95%2C-90%2C-85%2C-100%2C-95%2C-90%2C-85%2C-100%2C-95%2C-90%2C-85&start_date=2025-04-01&end_date=2025-05-31&hourly=cape%2Cconvective_inhibition%2Ctemperature_2m%2Cdew_point_2m%2Csurface_pressure%2Cwind_speed_10m%2Cwind_direction_10m%2Ctemperature_1000hPa%2Crelative_humidity_1000hPa%2Cgeopotential_height_1000hPa%2Cwind_speed_1000hPa%2Cwind_direction_1000hPa%2Ctemperature_925hPa%2Crelative_humidity_925hPa%2Cgeopotential_height_925hPa%2Cwind_speed_925hPa%2Cwind_direction_925hPa%2Ctemperature_850hPa%2Crelative_humidity_850hPa%2Cgeopotential_height_850hPa%2Cwind_speed_850hPa%2Cwind_direction_850hPa%2Ctemperature_700hPa%2Crelative_humidity_700hPa%2Cgeopotential_height_700hPa%2Cwind_speed_700hPa%2Cwind_direction_700hPa%2Ctemperature_600hPa%2Crelative_humidity_600hPa%2Cgeopotential_height_600hPa%2Cwind_speed_600hPa%2Cwind_direction_600hPa%2Ctemperature_500hPa%2Crelative_humidity_500hPa%2Cgeopotential_height_500hPa%2Cwind_speed_500hPa%2Cwind_direction_500hPa%2Ctemperature_400hPa%2Crelative_humidity_400hPa%2Cgeopotential_height_400hPa%2Cwind_speed_400hPa%2Cwind_direction_400hPa&models=gfs_global&wind_speed_unit=ms&timezone=GMT",
+        "sha256": "1172f68dc11671741d445c9710df0307791a0bb465ea5f13dd0c204961411023"
+      },
+      {
+        "kind": "DAT 2024 surveyed polylines (preliminary survey data)",
+        "url": "https://services.dat.noaa.gov/arcgis/rest/services/nws_damageassessmenttoolkit/DamageViewer/MapServer/1/query",
+        "records": 1692
+      }
+    ]
+  }
+}

@@ -1,4 +1,4 @@
-# OutBRAKE · v0.4
+# OutBRAKE · v0.5
 
 Uma animação de um surto fictício de tempestades e tornados condicionada por um ambiente meteorológico real. Projeto de Vitkkk.
 
@@ -90,3 +90,7 @@ OUTBRAKE_CANVAS_MODULE=@napi-rs/canvas node scripts/render-clip.cjs --snapshot b
 ```
 
 O argumento `--kml` também funciona sem `--video`.
+
+## Mudanças na v0.5
+
+Primeiro treinamento retrospectivo com dados reais, página `training.html` com resultados e consulta a todos os casos de teste, coleta automática e pipeline reproduzível em `training/`. Modelo treinado em 3.904 exemplos de 2024 e testado em 3.904 de 2025; resultados mistos, mantendo a avaliação no laboratório. Trajetórias do simulador podem usar 922 formas geométricas reamostradas de levantamentos DAT de 2024, com direção tangente consistente entre eco, tornado, vídeo e KML. Consulte [o método](training/README.md) e o relatório `training-report.md`.

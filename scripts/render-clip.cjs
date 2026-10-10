@@ -6,11 +6,11 @@ const root=fs.existsSync(path.join(project,'dist'))?path.join(project,'dist'):pr
 function el(id){if(!elements.has(id))elements.set(id,{textContent:'',innerHTML:'',value:'',disabled:false,classList:{add(){},remove(){},toggle(){}},setAttribute(){},append(){},getContext:()=>sounding.getContext('2d')});return elements.get(id);}
 elements.set('map',main);main.getBoundingClientRect=()=>({width:1280,height:720});
 const context={console,Math,Date,JSON,Number,String,Array,Object,Set,Map,Error,URLSearchParams,AbortController,setTimeout,clearTimeout,matchMedia:()=>({matches:false}),document:{getElementById:el,createElement:name=>name==='canvas'?createCanvas(1,1):el(name)},window:{OUTBRAKE_HEADLESS:true,devicePixelRatio:1},requestAnimationFrame(){}};
-vm.createContext(context);vm.runInContext(fs.readFileSync(path.join(root,'app.js'),'utf8'),context);
+vm.createContext(context);vm.runInContext(fs.readFileSync(path.join(root,'learning.js'),'utf8'),context);vm.runInContext(fs.readFileSync(path.join(root,'app.js'),'utf8'),context);
 const app=context.window.OutBRAKE,boot=JSON.parse(fs.readFileSync(process.argv.includes('--snapshot')?process.argv[process.argv.indexOf('--snapshot')+1]:path.join(root,'bootstrap.json'),'utf8'));
 Object.assign(app.state,{world:JSON.parse(fs.readFileSync(path.join(root,'world.json'),'utf8')),region:boot.region,ranking:boot.ranking,retrievedAt:boot.retrievedAt,env:app.envFromData(boot.data,boot.region.time,'gfs',boot.region.lat)});
 (async()=>{
-app.generate();app.drawSounding();
+app.state.trackTemplates=JSON.parse(fs.readFileSync(path.join(root,'track-shapes.json'),'utf8')).templates;app.generate();app.drawSounding();
 const satelliteMeta=JSON.parse(fs.readFileSync(path.join(root,'satellite.json'),'utf8'));
 app.state.satellite={...satelliteMeta,image:await loadImage(fs.readFileSync(path.join(root,satelliteMeta.file)))};
 
